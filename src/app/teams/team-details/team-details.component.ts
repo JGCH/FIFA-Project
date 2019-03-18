@@ -53,7 +53,7 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   selectMembers() {
-    this.router.navigate([`members/${this.team.teamId}`]);
+    this.router.navigate([`members/search/${this.team.teamId}`]);
   }
 
   uploadShield($event) {

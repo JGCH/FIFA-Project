@@ -1,0 +1,15 @@
+.member-search {
+  height: 100%;
+  width: 100%;
+}
+
+.member-list {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+  overflow: scroll;
+}

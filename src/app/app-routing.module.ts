@@ -7,10 +7,10 @@ const routes: Routes = [
     path: 'teams',
     component: TeamsModule
   },
-  /*{
+  {
     path: 'members',
     component: MembersModule
-  },*/
+  },
   {
     path: '',
     redirectTo: 'teams',

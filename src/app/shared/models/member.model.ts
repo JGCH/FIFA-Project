@@ -1,3 +1,5 @@
+import {RolsModel} from './rols.model';
+
 export class MemberModel {
   memberId: number;
   name: string;
@@ -8,4 +10,6 @@ export class MemberModel {
   rolId: number;
   headline: boolean;
   shirtNumber: number;
+  rol: RolsModel;
+  teamId: number;
 }

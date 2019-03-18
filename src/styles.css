@@ -25,7 +25,9 @@ html, body {
 app-teams,
 app-team-search,
 app-team-details,
-app-members {
+app-members,
+app-member-search,
+app-member-details {
   height: 100%;
   width: 100%;
 }

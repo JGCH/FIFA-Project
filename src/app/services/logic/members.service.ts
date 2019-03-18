@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MemberModel } from '../../shared/models/member.model';
-import {TeamModel} from '../../shared/models/team.model';
+import { RolsModel } from '../../shared/models/rols.model';
 
 @Injectable()
 
@@ -20,6 +20,8 @@ export class MembersService {
       rolId: 1,
       headline: true,
       shirtNumber: 0,
+      rol: null,
+      teamId: 1
     },
     {
       memberId: 2,
@@ -31,6 +33,8 @@ export class MembersService {
       rolId: 5,
       headline: false,
       shirtNumber: 1,
+      rol: null,
+      teamId: 1
     },
     {
       memberId: 3,
@@ -42,6 +46,8 @@ export class MembersService {
       rolId: 5,
       headline: true,
       shirtNumber: 2,
+      rol: null,
+      teamId: 1
     },
     {
       memberId: 4,
@@ -53,6 +59,8 @@ export class MembersService {
       rolId: 6,
       headline: true,
       shirtNumber: 29,
+      rol: null,
+      teamId: 1
     },
     {
       memberId: 5,
@@ -64,6 +72,8 @@ export class MembersService {
       rolId: 7,
       headline: true,
       shirtNumber: 28,
+      rol: null,
+      teamId: 1
     },
     {
       memberId: 6,
@@ -75,6 +85,8 @@ export class MembersService {
       rolId: 8,
       headline: true,
       shirtNumber: 17,
+      rol: null,
+      teamId: 1
     },
     {
       memberId: 7,
@@ -86,6 +98,8 @@ export class MembersService {
       rolId: 1,
       headline: true,
       shirtNumber: 0,
+      rol: null,
+      teamId: 2
     },
     {
       memberId: 8,
@@ -97,6 +111,8 @@ export class MembersService {
       rolId: 5,
       headline: true,
       shirtNumber: 1,
+      rol: null,
+      teamId: 2
     },
     {
       memberId: 9,
@@ -108,6 +124,8 @@ export class MembersService {
       rolId: 5,
       headline: false,
       shirtNumber: 2,
+      rol: null,
+      teamId: 2
     },
     {
       memberId: 10,
@@ -119,6 +137,8 @@ export class MembersService {
       rolId: 6,
       headline: true,
       shirtNumber: 3,
+      rol: null,
+      teamId: 2
     },
     {
       memberId: 11,
@@ -130,6 +150,8 @@ export class MembersService {
       rolId: 7,
       headline: true,
       shirtNumber: 8,
+      rol: null,
+      teamId: 2
     },
     {
       memberId: 12,
@@ -141,6 +163,8 @@ export class MembersService {
       rolId: 8,
       headline: true,
       shirtNumber: 10,
+      rol: null,
+      teamId: 2
     },
   ]
 
@@ -154,15 +178,16 @@ export class MembersService {
     });
   }
 
-  getMemberById(teamId): Observable<MemberModel> {
-    return new Observable<MemberModel>( observer => {
+  getMemberById(teamId): Observable<MemberModel[]> {
+    let members = [];
+    return new Observable( observer => {
       this.members.forEach( i => {
-        if (i.memberId === teamId) {
-          observer.next(i);
-          observer.complete();
+        if (i.teamId === teamId) {
+          members.push(i);
         }
       });
-      observer.error('Miembro no Existe');
+      observer.next(members);
+      observer.complete();
     });
   }
 
