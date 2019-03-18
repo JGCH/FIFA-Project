@@ -1,0 +1,45 @@
+<section class="team-search container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1 style="text-align: center">
+        EQUIPOS
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              [routerLink]="['/teams/details']">
+        <i class="fas fa-plus"></i>
+        Nuevo Equipo
+      </button>
+    </div>
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <input id="search"
+               type="text"
+               class="form-control"
+               placeholder="Buscar..."
+               aria-describedby="basic-addon1">
+      </div>
+    </div>
+  </div>
+  <div class="team-list">
+    <div *ngFor="let team of teams" (click)="selectTeam(team.teamId)">
+      <div class="card" style="width: 18rem;">
+        <img [src]="team.shieldImg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{team.name}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

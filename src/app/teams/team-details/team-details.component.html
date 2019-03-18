@@ -1,0 +1,72 @@
+<section class="team-details container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1 style="text-align: center">
+        INFORMACIÓN DEL EQUIPO
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              [routerLink]="['/teams']">
+        <i class="fas fa-plus"></i>
+        Equipos
+      </button>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              (click)="clearForm()">
+        <i class="fas fa-plus"></i>
+        Nuevo Equipo
+      </button>
+    </div>
+    <div class="col-2" *ngIf="!team.teamId">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              (click)="posTeam()">
+        <i class="fas fa-save"></i>
+        Guardar Equipo
+      </button>
+    </div>
+    <div class="col-2" *ngIf="team.teamId">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              (click)="selectMembers()">
+        <i class="far fa-eye"></i>
+        Ver Miembros
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <label for="name"
+             class="col-6">
+        Nombre:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="name"
+             [(ngModel)]="team.name">
+    </div>
+    <div class="row" *ngIf="team.shieldImg != null || team.flagImg != null">
+      <div class="col-3 card" style="width: 18rem;">
+        <img [src]="team.shieldImg" class="card-img-top">
+      </div>
+      <div class="col-3 card" style="width: 18rem;">
+        <img [src]="team.flagImg" class="card-img-top">
+      </div>
+    </div>
+    <div class="row" *ngIf="team.shieldImg == null || team.flagImg == null">
+      <input type="file" name="file" (change)="uploadShield($event)" accept="image/*" />
+      <input type="file" name="file" (change)="uploadFlag($event)" accept="image/*" />
+    </div>
+  </div>
+</section>
