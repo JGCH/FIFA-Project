@@ -1,3 +1,4 @@
+/* This is a service for control Rol Types */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RolTypeModel } from '../../shared/models/rol-type.model';
@@ -6,6 +7,7 @@ import { RolTypeModel } from '../../shared/models/rol-type.model';
 
 export class RolTypesService {
 
+  /* Simulation data */
   rolTypes: RolTypeModel[] = [
     {
       rolTypeId: 1,
@@ -20,6 +22,8 @@ export class RolTypesService {
   constructor() {
   }
 
+  /* Allow Get all TypeRols */
+  /* Return: Observable: RolTypeModel[] */
   getAllROleTypes(): Observable<RolTypeModel[]> {
     return new Observable( observer => {
       let rolTypes = Object.assign([], this.rolTypes);

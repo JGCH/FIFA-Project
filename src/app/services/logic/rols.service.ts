@@ -1,3 +1,4 @@
+/* This is a service for control Professions */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RolsModel } from '../../shared/models/rols.model';
@@ -5,6 +6,8 @@ import { RolsModel } from '../../shared/models/rols.model';
 @Injectable()
 
 export class RolsService {
+
+  /* Simulation data */
   rols: RolsModel[] = [
     {
       rolId: 1,
@@ -59,6 +62,8 @@ export class RolsService {
   constructor() {
   }
 
+  /* Allow Get all Rols */
+  /* Return: Observable: RolsModel[] */
   getAllRols(): Observable<RolsModel[]> {
     return new Observable( observer => {
       let rols = Object.assign([], this.rols);

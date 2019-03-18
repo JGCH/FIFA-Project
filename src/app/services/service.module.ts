@@ -1,3 +1,4 @@
+/* This is a main module of services for search in a server */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

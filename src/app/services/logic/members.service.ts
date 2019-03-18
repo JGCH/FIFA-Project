@@ -1,14 +1,16 @@
+/* This is a service for control Members */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MemberModel } from '../../shared/models/member.model';
-import { RolsModel } from '../../shared/models/rols.model';
 
 @Injectable()
 
 export class MembersService {
 
+  /* Control the Id of the Members */
   memberId: number;
 
+  /* Simulation data */
   members: MemberModel[] = [
     {
       memberId: 1,
@@ -184,6 +186,8 @@ export class MembersService {
   constructor() {
   }
 
+  /* Allow Get total Players in the system*/
+  /* Return: Observable: number => Number Total of Players */
   getTotalPlayers(): Observable<number> {
     return new Observable( observer => {
       let members = [];
@@ -196,6 +200,8 @@ export class MembersService {
     });
   }
 
+  /* Allow Get total Technitians in the system*/
+  /* Return: Observable: number => Number Total of Teachnitians */
   getTotalTechnitial(): Observable<number> {
     return new Observable( observer => {
       let members = [];
@@ -208,6 +214,8 @@ export class MembersService {
     });
   }
 
+  /* Allow Get total Alternates in the system*/
+  /* Return: Observable: number => Number Total of Alternates */
   getTotalAlternate(): Observable<number> {
     return new Observable( observer => {
       let members = [];
@@ -220,6 +228,8 @@ export class MembersService {
     });
   }
 
+  /* Allow Get all Members in the System */
+  /* Return: Observable: MemberModel[] => List Object Members */
   getAllMembers(): Observable<MemberModel[]> {
     return new Observable( observer => {
       let members = Object.assign([], this.members);
@@ -227,6 +237,9 @@ export class MembersService {
     });
   }
 
+  /* Allow Get all Members of a Soccer team*/
+  /* Params: teamId: number => Id of Team */
+  /* Return: Observable: TeamModel => List Object Members */
   getMemberById(teamId): Observable<MemberModel[]> {
     let members = [];
     return new Observable( observer => {
@@ -240,6 +253,9 @@ export class MembersService {
     });
   }
 
+  /* Allow Save a Member */
+  /* Params: member: MemberModel => Member to Save*/
+  /* Return: Observable: Number => Id of Member*/
   postMember(member: MemberModel): Observable<number> {
     return new Observable( observer => {
       this.memberId = this.memberId + 1;

@@ -1,3 +1,4 @@
+/* This is a service for control Teams os Soccer */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TeamModel } from '../../shared/models/team.model';
@@ -6,10 +7,10 @@ import { TeamModel } from '../../shared/models/team.model';
 
 export class TeamsService {
 
+  /* Control the Id of the Teams */
   teamId = 2;
-  pathShield = 'assets/images/team_shields/';
-  pathFlag = 'assets/images/team_flags/';
 
+  /* Simulation data */
   teams: TeamModel[] = [
     {
       teamId: 1,
@@ -28,12 +29,16 @@ export class TeamsService {
   constructor() {
   }
 
+  /* Allow Get total Teams in the system*/
+  /* Return: Observable: number => Number Total of Teams */
   getTotalTeams(): Observable<number> {
     return new Observable( observer => {
       observer.next(this.teams.length);
     });
   }
 
+  /* Allow Get all Teams */
+  /* Return: Observable: TeamModel[] => List Object Team*/
   getAllTeams(): Observable<TeamModel[]> {
     return new Observable( observer => {
       let teams = Object.assign([], this.teams);
@@ -41,6 +46,9 @@ export class TeamsService {
     });
   }
 
+  /* Allow Get a Team */
+  /* Params: teamId: number => Id of Team */
+  /* Return: Observable: TeamModel => Team Object*/
   getTeamById(teamId): Observable<TeamModel> {
     return new Observable<TeamModel>( observer => {
       this.teams.forEach( i => {
@@ -53,16 +61,13 @@ export class TeamsService {
     });
   }
 
+  /* Allow Save a Team */
+  /* Params: team: TeamModel => Team to Save*/
+  /* Return: Observable: Number => Id of Team*/
   postTeam(team: TeamModel): Observable<number> {
     return new Observable( observer => {
       this.teamId = this.teamId + 1;
       team.teamId = this.teamId
-      if (team.shieldImg != null) {
-        team.shieldImg = this.pathShield + team.shieldImg;
-      }
-      if (team.flagImg != null) {
-        team.flagImg = this.pathFlag + team.flagImg;
-      }
       this.teams.push(team);
       console.log(this.teams);
       observer.next(team.teamId);
