@@ -161,14 +161,63 @@ export class MembersService {
       birthdate: new Date(),
       photoImg: '',
       rolId: 8,
-      headline: true,
+      headline: false,
       shirtNumber: 10,
+      rol: null,
+      teamId: 2
+    },
+    {
+      memberId: 13,
+      name: 'Miguel',
+      lastName: 'Arenas',
+      nacionality: 'Brasil',
+      birthdate: new Date(),
+      photoImg: '',
+      rolId: 6,
+      headline: false,
+      shirtNumber: 0,
       rol: null,
       teamId: 2
     },
   ]
 
   constructor() {
+  }
+
+  getTotalPlayers(): Observable<number> {
+    return new Observable( observer => {
+      let members = [];
+      this.members.forEach( i => {
+        if (i.rolId >= 5) {
+          members.push(i);
+        }
+      });
+      observer.next(members.length);
+    });
+  }
+
+  getTotalTechnitial(): Observable<number> {
+    return new Observable( observer => {
+      let members = [];
+      this.members.forEach( i => {
+        if (i.rolId <= 4) {
+          members.push(i);
+        }
+      });
+      observer.next(members.length);
+    });
+  }
+
+  getTotalAlternate(): Observable<number> {
+    return new Observable( observer => {
+      let members = [];
+      this.members.forEach( i => {
+        if (!i.headline && i.rolId >= 5) {
+          members.push(i);
+        }
+      });
+      observer.next(members.length);
+    });
   }
 
   getAllMembers(): Observable<MemberModel[]> {

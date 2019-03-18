@@ -26,24 +26,12 @@ export class TeamsService {
   ];
 
   constructor() {
+  }
 
-    /*const obsTeams = new Observable( observer => {
-      observer.error('Mala cosa');
-      observer.next('Retornar Valor 1');
-      observer.complete();
+  getTotalTeams(): Observable<number> {
+    return new Observable( observer => {
+      observer.next(this.teams.length);
     });
-
-    obsTeams.subscribe(
-      n => {
-        console.log('Subs: ', n);
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        console.log('Terminó');
-      }
-    );*/
   }
 
   getAllTeams(): Observable<TeamModel[]> {
