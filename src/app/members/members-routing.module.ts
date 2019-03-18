@@ -10,7 +10,7 @@ const membersroutes: Routes = [
     component: MembersComponent,
     children: [
       {
-        path: 'search',
+        path: '',
         component: MemberSearchComponent
       },
       {
@@ -18,7 +18,11 @@ const membersroutes: Routes = [
         component: MemberSearchComponent
       },
       {
-        path: 'details',
+        path: 'details/:teamId',
+        component: MemberDetailsComponent
+      },
+      {
+        path: 'details/:memberId/:teamId',
         component: MemberDetailsComponent
       }
     ]

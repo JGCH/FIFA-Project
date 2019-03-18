@@ -1,3 +1,138 @@
-<p>
-  member-details works!
-</p>
+<section class="team-details container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1 style="text-align: center">
+        INFORMACIÓN DEL INTEGRANTE {{team.name}}
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              [routerLink]="['/teams']">
+        <i class="fas fa-plus"></i>
+        Equipos
+      </button>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              [routerLink]="['/teams/details']">
+        <i class="fas fa-plus"></i>
+        Nuevo Equipo
+      </button>
+    </div>
+    <div class="col-2">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              (click)="clearForm()">
+        <i class="fas fa-plus"></i>
+        Nuevo Miembro
+      </button>
+    </div>
+    <div class="col-2" *ngIf="!member.memberId">
+      <button type="button"
+              class="btn btn-light"
+              style="border: 1px solid #e4e7ea"
+              (click)="posMember()">
+        <i class="fas fa-save"></i>
+        Guardar Miembro
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <label for="name"
+             class="col-6">
+        Nombre:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="name"
+             [(ngModel)]="member.name">
+    </div>
+    <div class="row">
+      <label for="lastName"
+             class="col-6">
+        Apellido:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="lastName"
+             [(ngModel)]="member.lastName">
+    </div>
+    <div class="row">
+      <label for="nacionality"
+             class="col-6">
+        Nacionalidad:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="nacionality"
+             [(ngModel)]="member.nacionality">
+    </div>
+    <div class="row">
+      <label for="shirtNumber"
+             class="col-6">
+        Número de Camiseta:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="shirtNumber"
+             [(ngModel)]="member.shirtNumber">
+    </div>
+    <div class="row" *ngIf="mode">
+      <label for="rol"
+             class="col-6">
+        Rol Dentro del equipo:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="rol"
+             [(ngModel)]="member.rol.name">
+    </div>
+    <div class="row" *ngIf="!mode">
+      <label for="rolId"
+             class="col-6">
+        Rol ID Dentro del equipo Identificación:
+      </label>
+      <input type="text"
+             class="col-6"
+             id="rolId"
+             [(ngModel)]="member.rolId">
+    </div>
+    <br>
+    <br>
+    <div *ngIf="!mode">
+      <p>
+        rolId: 1 = Técnico
+      </p>
+      <p>
+        rolId: 2 = Asistente
+      </p>
+      <p>
+        rolId: 3 = Médico
+      </p>
+      <p>
+        rolId: 4 = Preparador
+      </p>
+      <p>
+        rolId: 5 = Portero
+      </p>
+      <p>
+        rolId: 6 = Defensa
+      </p>
+      <p>
+        rolId: 7 = Medio Campista
+      </p>
+      <p>
+        rolId: 8 = Delantero
+      </p>
+    </div>
+  </div>
+</section>

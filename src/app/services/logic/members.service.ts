@@ -8,7 +8,7 @@ import { MemberModel } from '../../shared/models/member.model';
 export class MembersService {
 
   /* Control the Id of the Members */
-  memberId: number;
+  memberId: number = 13;
 
   /* Simulation data */
   members: MemberModel[] = [
@@ -214,6 +214,20 @@ export class MembersService {
     });
   }
 
+  /* Allow Get total average of players for each team*/
+  /* Return: Observable: number => Number Total of Teachnitians */
+  getTotalAverage(): Observable<number> {
+    return new Observable( observer => {
+      let members = [];
+      this.members.forEach( i => {
+        if (i.rolId <= 4) {
+          members.push(i);
+        }
+      });
+      observer.next(members.length);
+    });
+  }
+
   /* Allow Get total Alternates in the system*/
   /* Return: Observable: number => Number Total of Alternates */
   getTotalAlternate(): Observable<number> {
@@ -240,7 +254,7 @@ export class MembersService {
   /* Allow Get all Members of a Soccer team*/
   /* Params: teamId: number => Id of Team */
   /* Return: Observable: TeamModel => List Object Members */
-  getMemberById(teamId): Observable<MemberModel[]> {
+  getMembersById(teamId): Observable<MemberModel[]> {
     let members = [];
     return new Observable( observer => {
       this.members.forEach( i => {
@@ -250,6 +264,20 @@ export class MembersService {
       });
       observer.next(members);
       observer.complete();
+    });
+  }
+
+  /* Allow Get Member of a Soccer team*/
+  /* Params: teamId: number => Id of Team */
+  /* Return: Observable: TeamModel => Object Member */
+  getMemberById(memberId, teamId): Observable<MemberModel> {
+    return new Observable( observer => {
+      this.members.forEach( i => {
+        if (i.teamId === teamId && i.memberId === memberId) {
+          observer.next(i);
+          observer.complete();
+        }
+      });
     });
   }
 

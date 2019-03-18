@@ -16,11 +16,16 @@ import { TeamModel } from '../../shared/models/team.model';
 })
 export class MemberSearchComponent implements OnInit {
 
+  teamId: number = 0;
   members: MemberModel[];
   rols: RolsModel[];
   rolTypes: RolTypeModel[];
-  team: TeamModel;
-  teamId: number;
+  team: TeamModel = {
+    teamId: 0,
+    name: 'Equipo',
+    shieldImg: null,
+    flagImg: null,
+  };
 
   constructor(private router: Router,
               private activeRoute: ActivatedRoute,
@@ -33,7 +38,7 @@ export class MemberSearchComponent implements OnInit {
     this.getRolTypes();
     this.getRols();
     this.teamId = Number(this.activeRoute.snapshot.paramMap.get('teamId'));
-    if (this.teamId !== null) {
+    if (this.teamId !== null && this.teamId > 0) {
       this.getTeam();
       this.getMembers();
     }
@@ -46,13 +51,14 @@ export class MemberSearchComponent implements OnInit {
           this.team = response;
         }, error => {
           console.log(error);
+          console.log("entro")
           this.router.navigate([`members`]);
         }
       );
   }
 
   getMembers() {
-    this.membersService.getMemberById(this.teamId)
+    this.membersService.getMembersById(this.teamId)
       .subscribe( response => {
         response.forEach( i => {
           this.rols.forEach( l => {
@@ -87,5 +93,13 @@ export class MemberSearchComponent implements OnInit {
         this.rolTypes = response;
         console.log(response);
       });
+  }
+
+  selectMember(memberId) {
+    this.router.navigate([`members/details/${memberId}/${this.team.teamId}`]);
+  }
+
+  newMember() {
+    this.router.navigate([`members/details/${this.team.teamId}`]);
   }
 }
