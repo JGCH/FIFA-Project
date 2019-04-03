@@ -9,14 +9,14 @@ export class RolTypesService {
 
   /* Simulation data */
   rolTypes: RolTypeModel[] = [
-    {
-      rolTypeId: 1,
-      name: 'Cuerpo Tecnico',
-    },
-    {
-      rolTypeId: 2,
-      name: 'Jugador',
-    }
+    new RolTypeModel(
+      1,
+      'Cuerpo Tecnico',
+    ),
+    new RolTypeModel(
+      2,
+      'Jugador',
+    )
   ];
 
   constructor() {

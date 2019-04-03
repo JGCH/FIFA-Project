@@ -10,6 +10,8 @@ import { MembersService } from './logic/members.service';
 import { RolTypesService } from './logic/rol-types.service';
 /* Service of Rol Types */
 import { RolsService } from './logic/rols.service';
+/* Service for Try Observables */
+import { TryService } from './logic/try.service';
 
 @NgModule({
   declarations: [],
@@ -20,7 +22,8 @@ import { RolsService } from './logic/rols.service';
     TeamsService,
     MembersService,
     RolTypesService,
-    RolsService
+    RolsService,
+    TryService
   ]
 })
 export class ServicesModule { }

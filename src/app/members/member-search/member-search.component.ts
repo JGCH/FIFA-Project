@@ -17,15 +17,10 @@ import { TeamModel } from '../../shared/models/team.model';
 export class MemberSearchComponent implements OnInit {
 
   teamId: number = 0;
+  team: TeamModel = new TeamModel();
   members: MemberModel[];
   rols: RolsModel[];
   rolTypes: RolTypeModel[];
-  team: TeamModel = {
-    teamId: 0,
-    name: 'Equipo',
-    shieldImg: null,
-    flagImg: null,
-  };
 
   constructor(private router: Router,
               private activeRoute: ActivatedRoute,
@@ -47,11 +42,9 @@ export class MemberSearchComponent implements OnInit {
   getTeam() {
     this.teamsService.getTeamById(this.teamId)
       .subscribe(response => {
-          console.log(response);
           this.team = response;
         }, error => {
           console.log(error);
-          console.log("entro")
           this.router.navigate([`members`]);
         }
       );
@@ -61,6 +54,13 @@ export class MemberSearchComponent implements OnInit {
     this.membersService.getMembersById(this.teamId)
       .subscribe( response => {
         response.forEach( i => {
+          this.rolTypes.forEach( l => {
+            if (l.rolTypeId === i.rolTypeId) {
+              i.rolType = l;
+            }
+          });
+        });
+        response.forEach( i => {
           this.rols.forEach( l => {
             if (l.rolId === i.rolId) {
               i.rol = l;
@@ -68,22 +68,6 @@ export class MemberSearchComponent implements OnInit {
           });
         });
         this.members = response;
-        console.log(response);
-      });
-  }
-
-  getRols() {
-    this.rolsService.getAllRols()
-      .subscribe( response => {
-        response.forEach( i => {
-          this.rolTypes.forEach( l => {
-            if (l.rolTypeId === i.rolTypeId) {
-              i.rolTypeName = l.name;
-            }
-          });
-        });
-        this.rols = response;
-        console.log(response);
       });
   }
 
@@ -91,14 +75,27 @@ export class MemberSearchComponent implements OnInit {
     this.rolTypesService.getAllROleTypes()
       .subscribe( response => {
         this.rolTypes = response;
-        console.log(response);
       });
   }
 
-  selectMember(memberId) {
+  getRols() {
+    this.rolsService.getAllRols()
+      .subscribe( response => {
+        this.rols = response;
+      });
+  }
+
+  /* Go to watch Team of the member */
+  goTeam() {
+    this.router.navigate([`teams/details/${this.team.teamId}`]);
+  }
+
+  /* Go to watch Member selected */
+  goMember(memberId) {
     this.router.navigate([`members/details/${memberId}/${this.team.teamId}`]);
   }
 
+  /* Create new Member for team selected */
   newMember() {
     this.router.navigate([`members/details/${this.team.teamId}`]);
   }

@@ -2,185 +2,229 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MemberModel } from '../../shared/models/member.model';
+import {RolTypeModel} from '../../shared/models/rol-type.model';
+import {RolsModel} from '../../shared/models/rols.model';
+import {TeamModel} from '../../shared/models/team.model';
 
 @Injectable()
 
 export class MembersService {
 
   /* Control the Id of the Members */
-  memberId: number = 13;
+  memberId: number = 14;
 
   /* Simulation data */
   members: MemberModel[] = [
-    {
-      memberId: 1,
-      name: 'Carlos',
-      lastName: 'Ocoro',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 1,
-      headline: true,
-      shirtNumber: 0,
-      rol: null,
-      teamId: 1
-    },
-    {
-      memberId: 2,
-      name: 'Maicol',
-      lastName: 'Popo',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 5,
-      headline: false,
-      shirtNumber: 1,
-      rol: null,
-      teamId: 1
-    },
-    {
-      memberId: 3,
-      name: 'Roberto',
-      lastName: 'Lucumi',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 5,
-      headline: true,
-      shirtNumber: 2,
-      rol: null,
-      teamId: 1
-    },
-    {
-      memberId: 4,
-      name: 'William',
-      lastName: 'latam',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 6,
-      headline: true,
-      shirtNumber: 29,
-      rol: null,
-      teamId: 1
-    },
-    {
-      memberId: 5,
-      name: 'Alberto',
-      lastName: 'giraldo',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 7,
-      headline: true,
-      shirtNumber: 28,
-      rol: null,
-      teamId: 1
-    },
-    {
-      memberId: 6,
-      name: 'Felipe',
-      lastName: 'mendoza',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 8,
-      headline: true,
-      shirtNumber: 17,
-      rol: null,
-      teamId: 1
-    },
-    {
-      memberId: 7,
-      name: 'Andres',
-      lastName: 'carabali',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 1,
-      headline: true,
-      shirtNumber: 0,
-      rol: null,
-      teamId: 2
-    },
-    {
-      memberId: 8,
-      name: 'Jhonathan',
-      lastName: 'cobo',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 5,
-      headline: true,
-      shirtNumber: 1,
-      rol: null,
-      teamId: 2
-    },
-    {
-      memberId: 9,
-      name: 'Johan',
-      lastName: 'vasques',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 5,
-      headline: false,
-      shirtNumber: 2,
-      rol: null,
-      teamId: 2
-    },
-    {
-      memberId: 10,
-      name: 'Arlexis',
-      lastName: 'chaura',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 6,
-      headline: true,
-      shirtNumber: 3,
-      rol: null,
-      teamId: 2
-    },
-    {
-      memberId: 11,
-      name: 'Oscar',
-      lastName: 'melo',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 7,
-      headline: true,
-      shirtNumber: 8,
-      rol: null,
-      teamId: 2
-    },
-    {
-      memberId: 12,
-      name: 'Brayan',
-      lastName: 'penagos',
-      nacionality: 'Colombia',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 8,
-      headline: false,
-      shirtNumber: 10,
-      rol: null,
-      teamId: 2
-    },
-    {
-      memberId: 13,
-      name: 'Miguel',
-      lastName: 'Arenas',
-      nacionality: 'Brasil',
-      birthdate: new Date(),
-      photoImg: '',
-      rolId: 6,
-      headline: false,
-      shirtNumber: 0,
-      rol: null,
-      teamId: 2
-    },
+    new MemberModel(
+      1,
+      'Marc-Andre',
+      'ter Stegen',
+      'Alemán',
+      '1985-01-20',
+      'assets/images/team_people/1.jpg',
+      true,
+      1,
+      2,
+      5,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      2,
+      'Jokin',
+      'Ezkieta',
+      'Alemán',
+      '1994-03-03',
+      'assets/images/team_people/2.jpg',
+      false,
+      2,
+      2,
+      5,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      3,
+      'Nelson',
+      'Semedo',
+      'Alemán',
+      '1989-02-10',
+      'assets/images/team_people/3.jpg',
+      true,
+      4,
+      2,
+      6,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      4,
+      'Arturo',
+      'Vidal',
+      'España',
+      '1980-05-10',
+      'assets/images/team_people/4.jpg',
+      true,
+      15,
+      2,
+      7,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      5,
+      'Lionel',
+      'Messi',
+      'Argentina',
+      '1986-09-15',
+      'assets/images/team_people/5.jpg',
+      false,
+      5,
+      2,
+      8,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      6,
+      'Ousmane',
+      'Dembélé',
+      'África',
+      '1997-07-02',
+      'assets/images/team_people/6.jpg',
+      true,
+      23,
+      2,
+      8,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      7,
+      'Anakin',
+      'Skywalker',
+      'Galaxia 10',
+      '1997-07-02',
+      'assets/images/team_people/7.png',
+      true,
+      23,
+      1,
+      1,
+      2,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      8,
+      'Keylor',
+      'Navas',
+      'Perú',
+      '1985-01-20',
+      'assets/images/team_people/8.jpg',
+      true,
+      1,
+      2,
+      5,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      9,
+      'Sergio',
+      'Ramos',
+      'Alemán',
+      '1994-03-03',
+      'assets/images/team_people/9.jpg',
+      false,
+      2,
+      2,
+      6,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      10,
+      'Marcelo',
+      'Peluca',
+      'Estados Unidos',
+      '1989-02-10',
+      'assets/images/team_people/10.jpg',
+      true,
+      4,
+      2,
+      6,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      11,
+      'Isco',
+      'CISCO',
+      'Inglaterra',
+      '1986-09-15',
+      'assets/images/team_people/11.jpg',
+      true,
+      25,
+      2,
+      7,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      12,
+      'Gareth',
+      'Bale',
+      'Argentina',
+      '1986-09-15',
+      'assets/images/team_people/12.jpg',
+      true,
+      20,
+      2,
+      8,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      13,
+      'Karim',
+      'Benzema',
+      'Estados Unidos',
+      '1997-07-02',
+      'assets/images/team_people/13.jpg',
+      false,
+      10,
+      2,
+      8,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    ),
+    new MemberModel(
+      14,
+      'Darth',
+      'Vader',
+      'Desconocido',
+      '1000-01-01',
+      'assets/images/team_people/14.jpg',
+      true,
+      9,
+      1,
+      1,
+      1,
+      new RolsModel(),
+      new RolTypeModel()
+    )
   ]
 
   constructor() {
@@ -259,7 +303,7 @@ export class MembersService {
     return new Observable( observer => {
       this.members.forEach( i => {
         if (i.teamId === teamId) {
-          members.push(i);
+          members.push(Object.assign([], i));
         }
       });
       observer.next(members);
@@ -274,7 +318,23 @@ export class MembersService {
     return new Observable( observer => {
       this.members.forEach( i => {
         if (i.teamId === teamId && i.memberId === memberId) {
-          observer.next(i);
+          observer.next(
+            new MemberModel(
+              i.memberId,
+              i.name,
+              i.lastName,
+              i.nacionality,
+              i.birthdate,
+              i.photoImg,
+              i.headline,
+              i.shirtNumber,
+              i.rolTypeId,
+              i.rolId,
+              i.teamId,
+              i.rol,
+              i.rolType
+            )
+          );
           observer.complete();
         }
       });
@@ -289,8 +349,61 @@ export class MembersService {
       this.memberId = this.memberId + 1;
       member.memberId = this.memberId
       this.members.push(member);
-      console.log(this.members);
       observer.next(member.memberId);
+      observer.complete();
+    });
+  }
+
+  deleteMember(member: MemberModel): Observable<string> {
+    return new Observable( observer => {
+      let pos = -1;
+      this.members.forEach( (i, p) => {
+        if (i.memberId === member.memberId) {
+          pos = p;
+        }
+      });
+      this.members.splice(pos, 1);
+      observer.next('Ok 200');
+      observer.complete();
+    });
+  }
+
+  updateMember(member: MemberModel): Observable<string> {
+    return new Observable( observer => {
+      this.members.forEach( i => {
+        if (i.memberId === member.memberId) {
+          i.memberId = member.memberId;
+          i.name = member.name;
+          i.lastName = member.lastName;
+          i.nacionality = member.nacionality;
+          i.birthdate = member.birthdate;
+          i.photoImg = member.photoImg;
+          i.headline = member.headline;
+          i.shirtNumber = member.shirtNumber;
+          i.rolTypeId = member.rolTypeId;
+          i.rolId = member.rolId;
+          i.teamId = member.teamId;
+        }
+      });
+      observer.next('Ok 200');
+      observer.complete();
+    });
+  }
+
+  deleteMembers(team: TeamModel): Observable<string> {
+    let pos = [];
+    return new Observable( observer => {
+      this.members.forEach( (i, p) => {
+        if (i.teamId === team.teamId) {
+          pos.push(p);
+        }
+      });
+      pos.reverse();
+      pos.forEach( i => {
+        this.members.splice(i, 1);
+      });
+      observer.next('Ok 200');
+      observer.complete();
     });
   }
 }

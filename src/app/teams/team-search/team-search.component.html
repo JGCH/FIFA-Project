@@ -7,17 +7,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-1"></div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              [routerLink]="['/teams/details']">
-        <i class="fas fa-plus"></i>
-        Nuevo Equipo
-      </button>
-    </div>
-    <div class="col-6">
+    <div class="col-7">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">
@@ -32,8 +22,21 @@
       </div>
     </div>
   </div>
+  <div class="row" style="margin-bottom: 1%">
+    <div class="col">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                [routerLink]="['/teams/details']">
+          <i class="fas fa-plus"></i>
+          Nuevo Equipo
+        </button>
+      </div>
+    </div>
+  </div>
   <div class="team-list">
-    <div *ngFor="let team of teams" (click)="selectTeam(team.teamId)">
+    <div *ngFor="let team of teams | async" (click)="goTeam(team.teamId)" style="margin: 0.5%">
       <div class="card" style="width: 18rem;">
         <img [src]="team.shieldImg" class="card-img-top">
         <div class="card-body">
@@ -46,22 +49,22 @@
     <h3>Información Adicional de la FIFA</h3>
     <div>
       <p>
-        Equipos registrados: {{totalTeams}}
+        Equipos registrados: {{totalTeams | async}}
       </p>
     </div>
     <div>
       <p>
-        Total de Jugadores Participantes: {{totalPlayers}}
+        Total de Jugadores Participantes: {{totalPlayers | async}}
       </p>
     </div>
     <div>
       <p>
-        Total de Tecnicos Participantes: {{totalTechnitians}}
+        Total de Tecnicos Participantes: {{totalTechnitians | async}}
       </p>
     </div>
     <div>
       <p>
-        Total Suplentes: {{totalAlternates}}
+        Total Suplentes: {{totalAlternates | async}}
       </p>
     </div>
   </div>

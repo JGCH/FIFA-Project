@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TeamsService } from '../../services/logic/teams.service';
 import { MembersService } from '../../services/logic/members.service';
 import { TeamModel } from '../../shared/models/team.model';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -12,11 +13,16 @@ import { TeamModel } from '../../shared/models/team.model';
 })
 export class TeamSearchComponent implements OnInit {
 
-  teams: TeamModel[];
-  totalTeams: number;
-  totalPlayers: number;
-  totalTechnitians: number;
-  totalAlternates: number;
+  // totalTeams: number;
+  totalTeams: Observable<number>;
+  // totalPlayers: number;
+  totalPlayers: Observable<number>;
+  // totalTechnitians: number;
+  totalTechnitians: Observable<number>;
+  // totalAlternates: number;
+  totalAlternates: Observable<number>;
+  // teams: TeamModel[];
+  teams: Observable<TeamModel[]>;
 
   constructor( private router: Router,
                private teamsService: TeamsService,
@@ -31,42 +37,47 @@ export class TeamSearchComponent implements OnInit {
   }
 
   getTeams() {
-    this.teamsService.getAllTeams()
+    /*this.teamsService.getAllTeams()
       .subscribe( response => {
         this.teams = response;
-        console.log(response);
-      });
+      });*/
+    this.teams = this.teamsService.getAllTeams();
   }
 
   getTotalTeams() {
-    this.teamsService.getTotalTeams()
+    /*this.teamsService.getTotalTeams()
       .subscribe( response => {
         this.totalTeams = response;
-      });
+      });*/
+    this.totalTeams = this.teamsService.getTotalTeams();
   }
 
   getTotalPlayers() {
-    this.membersService.getTotalPlayers()
+    /*this.membersService.getTotalPlayers()
       .subscribe( response => {
         this.totalPlayers = response;
-      });
+      });*/
+    this.totalPlayers = this.membersService.getTotalPlayers();
   }
 
   getTotalTechnitial() {
-    this.membersService.getTotalTechnitial()
+    /*this.membersService.getTotalTechnitial()
       .subscribe( response => {
         this.totalTechnitians = response;
-      });
+      });*/
+    this.totalTechnitians = this.membersService.getTotalTechnitial();
   }
 
   getTotalAlternate() {
-    this.membersService.getTotalAlternate()
+    /*this.membersService.getTotalAlternate()
       .subscribe( response => {
         this.totalAlternates = response;
-      });
+      });*/
+    this.totalAlternates = this.membersService.getTotalAlternate();
   }
 
-  selectTeam(teamId) {
+  /* Allow go to team detail */
+  goTeam(teamId) {
     this.router.navigate([`teams/details/${teamId}`]);
   }
 }

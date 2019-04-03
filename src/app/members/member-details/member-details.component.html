@@ -1,138 +1,191 @@
 <section class="team-details container-fluid">
   <div class="row">
     <div class="col">
-      <h1 style="text-align: center">
-        INFORMACIÓN DEL INTEGRANTE {{team.name}}
+      <h1 style="text-align: center" *ngIf="team.teamId > 0 && member.memberId">
+        INTEGRANTE DEL {{team.name | uppercase}} / {{member.name | uppercase}}
+      </h1>
+      <h1 style="text-align: center" *ngIf="team.teamId > 0 && member.memberId == 0">
+        NUEVO INTEGRANTE DE {{team.name | uppercase}}
       </h1>
     </div>
   </div>
-  <div class="row">
-    <div class="col-1"></div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              [routerLink]="['/teams']">
-        <i class="fas fa-plus"></i>
-        Equipos
-      </button>
-    </div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              [routerLink]="['/teams/details']">
-        <i class="fas fa-plus"></i>
-        Nuevo Equipo
-      </button>
-    </div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              (click)="clearForm()">
-        <i class="fas fa-plus"></i>
-        Nuevo Miembro
-      </button>
-    </div>
-    <div class="col-2" *ngIf="!member.memberId">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              (click)="posMember()">
-        <i class="fas fa-save"></i>
-        Guardar Miembro
-      </button>
+  <div class="row" style="margin-bottom: 1%">
+    <div class="col">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                [routerLink]="['/teams']">
+          <i class="far fa-eye"></i>
+          Ver Equipos
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="goTeam()">
+          <i class="far fa-eye"></i>
+          Ver {{team.name}}
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="goMembers()">
+          <i class="far fa-eye"></i>
+          Ver Integrantes
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="clearForm()">
+          <i class="fas fa-plus"></i>
+          Nuevo
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="posMember()"
+                *ngIf="!member.memberId">
+          <i class="fas fa-save"></i>
+          Guardar
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="updateMember()"
+                *ngIf="member.memberId">
+          <i class="fas fa-save"></i>
+          Modificar
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="deleteMember()"
+                *ngIf="member.memberId">
+          <i class="fas fa-trash-alt"></i>
+          Eliminar
+        </button>
+      </div>
     </div>
   </div>
-  <div class="container-fluid">
-    <div class="row">
-      <label for="name"
-             class="col-6">
-        Nombre:
+  <div class="row">
+    <label for="name"
+           class="col-3 col-form-label">
+    </label>
+    <div class="custom-control custom-switch">
+      <input id="status"
+             [(ngModel)]="member.headline"
+             type="checkbox"
+             class="custom-control-input">
+      <label for="status"
+             class="custom-control-label" >
+        Suplente/Titular
       </label>
-      <input type="text"
-             class="col-6"
-             id="name"
-             [(ngModel)]="member.name">
     </div>
-    <div class="row">
-      <label for="lastName"
-             class="col-6">
-        Apellido:
-      </label>
-      <input type="text"
-             class="col-6"
-             id="lastName"
-             [(ngModel)]="member.lastName">
+  </div>
+  <div class="row">
+    <label for="name"
+           class="col-3 col-form-label">
+      Nombre:
+    </label>
+    <input class="col-6"
+           type="text"
+           id="name"
+           placeholder="Nombre"
+           [(ngModel)]="member.name">
+  </div>
+  <div class="row">
+    <label for="lastName"
+           class="col-3 col-form-label">
+      Apellido:
+    </label>
+    <input class="col-6"
+           type="text"
+           id="lastName"
+           placeholder="Apellido"
+           [(ngModel)]="member.lastName">
+  </div>
+  <div class="row">
+    <label for="lastName"
+           class="col-3 col-form-label">
+      Fecha de Nacimiento:
+    </label>
+    <input type="date"
+           id="birthdate"
+           name="birthdate"
+           [(ngModel)]="member.birthdate">
+           <!--value="2018-07-22"-->
+  </div>
+  <div class="row">
+    <label for="nacionality"
+           class="col-3 col-form-label">
+      Nacionalidad:
+    </label>
+    <input class="col-6"
+           type="text"
+           id="nacionality"
+           placeholder="Nacionalidad"
+           [(ngModel)]="member.nacionality">
+  </div>
+  <div class="row">
+    <label for="shirtNumber"
+           class="col-3 col-form-label">
+      Camiseta:
+    </label>
+    <input class="col-6"
+           type="text"
+           id="shirtNumber"
+           placeholder="Número de la Camiseta dentro del equipo"
+           [(ngModel)]="member.shirtNumber">
+  </div>
+  <div class="row">
+    <label for="rolType"
+           class="col-3 col-form-label">
+      Rol:
+    </label>
+    <select id="rolType" [(ngModel)]="member.rolTypeId" (change)="getRols(member.rolTypeId)">
+      <option *ngFor="let rolType of rolTypes"
+              [ngValue]="rolType.rolTypeId">
+        {{rolType.name}}
+      </option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="rol"
+           class="col-3 col-form-label">
+      Ocupación:
+    </label>
+    <select id="rol" [(ngModel)]="member.rolId">
+      <option *ngFor="let rol of rols"
+              [ngValue]="rol.rolId">
+        {{rol.name}}
+      </option>
+    </select>
+  </div>
+  <div class="row" style="margin-top: 2%">
+    <h4 class="col-4" style="text-align: center;">
+      Imagen de Perfil
+    </h4>
+  </div>
+  <div class="row" style="height: 40%">
+    <div class="col-4" style="border: 1px #f8f9fa solid">
+      <img [src]="member.photoImg"
+           class="card-img-top">
     </div>
-    <div class="row">
-      <label for="nacionality"
-             class="col-6">
-        Nacionalidad:
-      </label>
-      <input type="text"
-             class="col-6"
-             id="nacionality"
-             [(ngModel)]="member.nacionality">
-    </div>
-    <div class="row">
-      <label for="shirtNumber"
-             class="col-6">
-        Número de Camiseta:
-      </label>
-      <input type="text"
-             class="col-6"
-             id="shirtNumber"
-             [(ngModel)]="member.shirtNumber">
-    </div>
-    <div class="row" *ngIf="mode">
-      <label for="rol"
-             class="col-6">
-        Rol Dentro del equipo:
-      </label>
-      <input type="text"
-             class="col-6"
-             id="rol"
-             [(ngModel)]="member.rol.name">
-    </div>
-    <div class="row" *ngIf="!mode">
-      <label for="rolId"
-             class="col-6">
-        Rol ID Dentro del equipo Identificación:
-      </label>
-      <input type="text"
-             class="col-6"
-             id="rolId"
-             [(ngModel)]="member.rolId">
-    </div>
-    <br>
-    <br>
-    <div *ngIf="!mode">
-      <p>
-        rolId: 1 = Técnico
-      </p>
-      <p>
-        rolId: 2 = Asistente
-      </p>
-      <p>
-        rolId: 3 = Médico
-      </p>
-      <p>
-        rolId: 4 = Preparador
-      </p>
-      <p>
-        rolId: 5 = Portero
-      </p>
-      <p>
-        rolId: 6 = Defensa
-      </p>
-      <p>
-        rolId: 7 = Medio Campista
-      </p>
-      <p>
-        rolId: 8 = Delantero
-      </p>
+  </div>
+  <div class="row">
+    <div class="col-4" style="text-align: center;">
+      <div class="custom-file">
+        <input type="file"
+               class="custom-file-input"
+               id="shield"
+               lang="es"
+               (change)="uploadPhoto($event)"
+               accept="image/*">
+        <label class="custom-file-label"
+               for="shield">
+          Seleccionar Foto del Jugador
+        </label>
+      </div>
     </div>
   </div>
 </section>

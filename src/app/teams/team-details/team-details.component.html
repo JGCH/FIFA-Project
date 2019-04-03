@@ -1,72 +1,123 @@
 <section class="team-details container-fluid">
   <div class="row">
     <div class="col">
-      <h1 style="text-align: center">
-        INFORMACIÓN DEL EQUIPO
+      <h1 style="text-align: center" *ngIf="team.teamId > 0">
+        INFORMACIÓN DEL {{team.name | uppercase}}
+      </h1>
+      <h1 style="text-align: center" *ngIf="team.teamId == 0">
+        NUEVO EQUIPO
       </h1>
     </div>
   </div>
-  <div class="row">
-    <div class="col-1"></div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              [routerLink]="['/teams']">
-        <i class="fas fa-plus"></i>
-        Equipos
-      </button>
-    </div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              (click)="clearForm()">
-        <i class="fas fa-plus"></i>
-        Nuevo Equipo
-      </button>
-    </div>
-    <div class="col-2" *ngIf="!team.teamId">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              (click)="posTeam()">
-        <i class="fas fa-save"></i>
-        Guardar Equipo
-      </button>
-    </div>
-    <div class="col-2" *ngIf="team.teamId">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              (click)="selectMembers()">
-        <i class="far fa-eye"></i>
-        Ver Miembros
-      </button>
+  <div class="row" style="margin-bottom: 1%">
+    <div class="col">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                [routerLink]="['/teams']">
+          <i class="far fa-eye"></i>
+          Ver Equipos
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="clearForm()">
+          <i class="fas fa-plus"></i>
+          Nuevo
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="posTeam()"
+                *ngIf="!team.teamId">
+          <i class="fas fa-save"></i>
+          Guardar
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="updateTeam()"
+                *ngIf="team.teamId">
+          <i class="fas fa-save"></i>
+          Modificar
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="delete()"
+                *ngIf="team.teamId">
+          <i class="fas fa-trash-alt"></i>
+          Eliminar
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="goMembers()"
+                *ngIf="team.teamId">
+          <i class="far fa-eye"></i>
+          Ver Integrantes
+        </button>
+      </div>
     </div>
   </div>
-  <div class="container-fluid">
-    <div class="row">
-      <label for="name"
-             class="col-6">
-        Nombre:
-      </label>
-      <input type="text"
-             class="col-6"
-             id="name"
-             [(ngModel)]="team.name">
+  <div class="row" style="margin-bottom: 2%">
+    <label for="name"
+           class="col-2 col-form-label">
+      Nombre del Equipo
+    </label>
+    <input class="col-6"
+           type="text"
+           id="name"
+           placeholder="Nombre del Equipo"
+           [(ngModel)]="team.name">
+  </div>
+  <div class="row">
+    <h4 class="col-4" style="text-align: center;">
+      Escudo
+    </h4>
+    <h4 class="col-4" style="text-align: center;">
+      Bandera
+    </h4>
+  </div>
+  <div class="row" style="height: 40%">
+    <div class="col-4" style="border: 1px #f8f9fa solid">
+      <img [src]="team.shieldImg"
+           class="card-img-top">
     </div>
-    <div class="row" *ngIf="team.shieldImg != null || team.flagImg != null">
-      <div class="col-3 card" style="width: 18rem;">
-        <img [src]="team.shieldImg" class="card-img-top">
-      </div>
-      <div class="col-3 card" style="width: 18rem;">
-        <img [src]="team.flagImg" class="card-img-top">
+    <div class="col-4" style="border: 1px #f8f9fa solid">
+      <img [src]="team.flagImg"
+           class="card-img-top">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4" style="text-align: center;">
+      <div class="custom-file">
+        <input type="file"
+               class="custom-file-input"
+               id="shield"
+               lang="es"
+               (change)="uploadShield($event)"
+               accept="image/*">
+        <label class="custom-file-label"
+               for="shield">
+          Seleccionar Escudo
+        </label>
       </div>
     </div>
-    <div class="row" *ngIf="team.shieldImg == null || team.flagImg == null">
-      <input type="file" name="file" (change)="uploadShield($event)" accept="image/*" />
-      <input type="file" name="file" (change)="uploadFlag($event)" accept="image/*" />
+    <div class="col-4" style="text-align: center;">
+      <div class="custom-file">
+        <input type="file"
+               class="custom-file-input"
+               id="flag"
+               lang="es"
+               (change)="uploadFlag($event)"
+               accept="image/*">
+        <label class="custom-file-label"
+               for="flag">
+          Seleccionar Bandera
+        </label>
+      </div>
     </div>
   </div>
 </section>

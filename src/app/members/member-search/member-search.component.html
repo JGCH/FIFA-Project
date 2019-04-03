@@ -2,31 +2,12 @@
   <div class="row">
     <div class="col">
       <h1 style="text-align: center">
-        MIEMBROS
+        INTEGRANTES DEL {{team.name | uppercase}}
       </h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-1"></div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              [routerLink]="['/teams']">
-        <i class="fas fa-plus"></i>
-        Equipos
-      </button>
-    </div>
-    <div class="col-2">
-      <button type="button"
-              class="btn btn-light"
-              style="border: 1px solid #e4e7ea"
-              (click)="newMember()">
-        <i class="fas fa-plus"></i>
-        Nuevo Miembro
-      </button>
-    </div>
-    <div class="col-6">
+    <div class="col-7">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">
@@ -41,21 +22,52 @@
       </div>
     </div>
   </div>
+  <div class="row" style="margin-bottom: 1%">
+    <div class="col">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                [routerLink]="['/teams']">
+          <i class="far fa-eye"></i>
+          Ver Equipos
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="goTeam()">
+          <i class="far fa-eye"></i>
+          Ver {{team.name}}
+        </button>
+        <button type="button"
+                class="btn btn-light"
+                style="border: 1px solid #e4e7ea"
+                (click)="newMember()">
+          <i class="fas fa-plus"></i>
+          Nuevo Integrante
+        </button>
+      </div>
+    </div>
+  </div>
   <div class="member-list">
-    <div *ngFor="let member of members" (click)="selectMember(member.memberId)">
+    <div *ngFor="let member of members" (click)="goMember(member.memberId)" style="margin: 0.5%">
       <div class="card" style="width: 18rem;">
-        <img [src]="member.photoImg" class="card-img-top">
+        <img [src]="member.photoImg"
+             class="card-img-top">
         <div class="card-body">
-          <h5 class="card-title">{{member.name}}</h5>
+          <h3 class="card-title">
+            {{member.name}}
+          </h3>
+          <h4 class="card-title">{{member.rolType.name}}</h4>
+          <h5 class="card-title" *ngIf="member.rolType.rolTypeId == 1">{{member.rol.name}}</h5>
+          <h5 class="card-title" *ngIf="member.rolType.rolTypeId == 2 && member.headline">{{member.rol.name}} (Titular)</h5>
+          <h5 class="card-title" *ngIf="member.rolType.rolTypeId == 2 && !member.headline">{{member.rol.name}} (Suplente)</h5>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">{{'Apellido: ' + member.lastName}}</li>
           <li class="list-group-item">{{'Nacionalidad: ' + member.nacionality}}</li>
-          <li class="list-group-item">{{'Equipo: ' + team.name}}</li>
-          <li class="list-group-item">{{'Rol: ' + member.rol.name}}</li>
-          <li class="list-group-item">{{'Camiseta: ' + member.shirtNumber}}</li>
-          <li class="list-group-item" *ngIf="member.headline">Titular</li>
-          <li class="list-group-item" *ngIf="!member.headline">Banca</li>
+          <li class="list-group-item">{{'Nacimiento: ' + member.birthdate}}</li>
+          <li class="list-group-item">{{'Número Camisa: ' + member.shirtNumber}}</li>
         </ul>
       </div>
     </div>

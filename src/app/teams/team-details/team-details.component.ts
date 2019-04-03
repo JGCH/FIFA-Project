@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { TeamsService } from '../../services/logic/teams.service';
+import { MembersService } from '../../services/logic/members.service';
 import { TeamModel } from '../../shared/models/team.model';
 
 
@@ -13,17 +14,12 @@ import { TeamModel } from '../../shared/models/team.model';
 export class TeamDetailsComponent implements OnInit {
 
   teamId: number = 0;
-  team: TeamModel = {
-    teamId: 0,
-    name: '',
-    flagImg: null,
-    shieldImg: null
-  };
-
+  team: TeamModel = new TeamModel();
 
   constructor(private router: Router,
               private activeRoute: ActivatedRoute,
-              private teamsService: TeamsService) {}
+              private teamsService: TeamsService,
+              private membersService: MembersService) {}
 
   ngOnInit() {
     this.teamId = Number(this.activeRoute.snapshot.paramMap.get('teamId'));
@@ -33,12 +29,10 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   getTeam() {
-    this.teamsService.getTeamById(this.teamId)
+    this.teamsService.getTeamByIdPipe(this.teamId)
       .subscribe(response => {
-          console.log(response);
           this.team = response;
         }, error => {
-          console.log(error);
           this.router.navigate([`teams/details/`]);
         }
       );
@@ -47,32 +41,62 @@ export class TeamDetailsComponent implements OnInit {
   posTeam() {
     this.teamsService.postTeam(this.team)
       .subscribe( response => {
-        console.log(response);
-        this.router.navigate([`teams/details/${{response}}`]);
+        this.router.navigate([`teams`]);
       });
   }
 
-  selectMembers() {
-    this.router.navigate([`members/search/${this.team.teamId}`]);
+  delete() {
+    this.deleteMembers();
   }
 
-  uploadShield($event) {
-    let files = $event.srcElement.files;
-    let src = window.URL.createObjectURL(files[0]);
-    console.log('Subiendo Escudo');
-    console.log($event);
-    console.log(files);
-    console.log(src);
-    this.team.shieldImg = src;
+  deleteMembers() {
+    this.membersService.deleteMembers(this.team)
+      .subscribe( r => {
+        this.deleteTeam();
+      });
   }
 
-  uploadFlag($event) {
-    console.log('Subiendo Bandera');
-    console.log($event);
+  deleteTeam() {
+    this.teamsService.deleteTeam(this.team)
+      .subscribe( r => {
+        this.router.navigate([`teams`]);
+      });
+  }
+
+  updateTeam() {
+    this.teamsService.updateTeam(this.team)
+      .subscribe( r => {
+        this.router.navigate([`teams`]);
+      });
+  }
+
+  uploadShield(event) {
+    this.team.resetShieldImg();
+    if (event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (eventR) => {
+        this.team.shieldImg = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  uploadFlag(event) {
+    this.team.resetFlagImg();
+    if (event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (eventR) => {
+        this.team.flagImg = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   clearForm() {
-    this.router.navigate([`teams/details/`]);
+    this.router.navigate([`teams/details`]);
   }
 
+  goMembers() {
+    this.router.navigate([`members/search/${this.team.teamId}`]);
+  }
 }

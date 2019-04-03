@@ -17,31 +17,12 @@ import { TeamModel } from '../../shared/models/team.model';
 })
 export class MemberDetailsComponent implements OnInit {
 
-  state = null;
-  memberId: number = null;
   teamId: number = null;
-  mode: boolean = false;
+  team: TeamModel = new TeamModel();
+  memberId: number = null;
   rols: RolsModel[];
   rolTypes: RolTypeModel[];
-  team: TeamModel = {
-    teamId: 0,
-    name: '',
-    shieldImg: null,
-    flagImg: null,
-  };
-  member: MemberModel = {
-    memberId: 0,
-    name: '',
-    lastName: '',
-    nacionality: '',
-    birthdate: new Date(),
-    photoImg: '',
-    rolId: 0,
-    headline: false,
-    shirtNumber: 0,
-    rol: null,
-    teamId: 0
-  }
+  member: MemberModel = new MemberModel();
 
   constructor(private router: Router,
               private activeRoute: ActivatedRoute,
@@ -51,8 +32,6 @@ export class MemberDetailsComponent implements OnInit {
               private teamsService: TeamsService) { }
 
   ngOnInit() {
-    this.getRolTypes();
-    this.getRols();
     this.memberId = Number(this.activeRoute.snapshot.paramMap.get('memberId'));
     this.teamId = Number(this.activeRoute.snapshot.paramMap.get('teamId'));
     if (this.teamId !== null && this.teamId > 0) {
@@ -61,19 +40,14 @@ export class MemberDetailsComponent implements OnInit {
     if (this.memberId !== null && this.memberId > 0) {
       this.getMember();
     }
-  }
-
-  uploadPhoto() {
-
+    this.getRolTypes();
   }
 
   getTeam() {
     this.teamsService.getTeamById(this.teamId)
       .subscribe(response => {
-          console.log(response);
           this.team = response;
         }, error => {
-          console.log(error);
           this.router.navigate([`members/details`]);
         }
       );
@@ -82,24 +56,30 @@ export class MemberDetailsComponent implements OnInit {
   getMember() {
     this.membersService.getMemberById(this.memberId, this.teamId)
       .subscribe( response => {
-        console.log(response);
         this.member = response;
-        this.mode = true;
       });
   }
 
-  getRols() {
-    this.rolsService.getAllRols()
+  posMember() {
+    this.member.teamId = this.team.teamId;
+    this.member.headline = true;
+    this.membersService.postMember(this.member)
       .subscribe( response => {
-        response.forEach( i => {
-          this.rolTypes.forEach( l => {
-            if (l.rolTypeId === i.rolTypeId) {
-              i.rolTypeName = l.name;
-            }
-          });
-        });
-        this.rols = response;
-        console.log(response);
+        this.router.navigate([`members/search/${this.teamId}`]);
+      });
+  }
+
+  deleteMember() {
+    this.membersService.deleteMember(this.member)
+      .subscribe( r => {
+        this.router.navigate([`members/search/${this.teamId}`]);
+      });
+  }
+
+  updateMember() {
+    this.membersService.updateMember(this.member)
+      .subscribe( r => {
+        this.router.navigate([`members/search/${this.teamId}`]);
       });
   }
 
@@ -107,21 +87,37 @@ export class MemberDetailsComponent implements OnInit {
     this.rolTypesService.getAllROleTypes()
       .subscribe( response => {
         this.rolTypes = response;
-        console.log(response);
+        this.getRols(this.member.rolTypeId);
       });
   }
 
-  posMember() {
-    this.member.teamId = this.team.teamId;
-    this.member.headline = true
-    this.membersService.postMember(this.member)
+  getRols(rolTypeId) {
+    this.rolsService.getRolsById(rolTypeId)
       .subscribe( response => {
-        console.log(response);
+        this.rols = response;
       });
+  }
+
+  uploadPhoto(event) {
+    this.member.resetPhotoImg();
+    if (event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (eventR) => {
+        this.member.photoImg = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   clearForm() {
     this.router.navigate([`members/details/${this.teamId}`]);
   }
 
+  goTeam() {
+    this.router.navigate([`teams/details/${this.team.teamId}`]);
+  }
+
+  goMembers() {
+    this.router.navigate([`members/search/${this.team.teamId}`]);
+  }
 }

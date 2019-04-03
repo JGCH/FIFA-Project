@@ -3,4 +3,10 @@
 export class RolTypeModel {
   rolTypeId: number;
   name: string;
+
+  constructor(rolTypeId: number = 0,
+              name: string = '') {
+    this.rolTypeId = rolTypeId;
+    this.name = name;
+  }
 }
