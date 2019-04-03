@@ -44,7 +44,7 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   getTeam() {
-    this.teamsService.getTeamById(this.teamId)
+    this.teamsService.getTeamByIdPipe(this.teamId)
       .subscribe(response => {
           this.team = response;
         }, error => {

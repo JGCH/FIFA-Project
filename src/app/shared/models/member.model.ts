@@ -34,7 +34,7 @@ export class MemberModel {
     this.name = name;
     this.lastName = lastName;
     this.nacionality = nacionality;
-    this.birthdate = birthdate;
+    this.birthdate = this.getDate();
     this.photoImg = photoImg;
     this.headline = headline;
     this.shirtNumber = shirtNumber;

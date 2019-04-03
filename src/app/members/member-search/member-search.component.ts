@@ -8,6 +8,7 @@ import { MemberModel } from '../../shared/models/member.model';
 import { RolsModel } from '../../shared/models/rols.model';
 import { RolTypeModel } from '../../shared/models/rol-type.model';
 import { TeamModel } from '../../shared/models/team.model';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-member-search',
@@ -18,7 +19,8 @@ export class MemberSearchComponent implements OnInit {
 
   teamId: number = 0;
   team: TeamModel = new TeamModel();
-  members: MemberModel[];
+  totalPlayerAverage: Observable<number>;
+  members: MemberModel[] = [];
   rols: RolsModel[];
   rolTypes: RolTypeModel[];
 
@@ -37,10 +39,11 @@ export class MemberSearchComponent implements OnInit {
       this.getTeam();
       this.getMembers();
     }
+    //this.getTotalPlayerAverage();
   }
 
   getTeam() {
-    this.teamsService.getTeamById(this.teamId)
+    this.teamsService.getTeamByIdPipe(this.teamId)
       .subscribe(response => {
           this.team = response;
         }, error => {
@@ -53,6 +56,18 @@ export class MemberSearchComponent implements OnInit {
   getMembers() {
     this.membersService.getMembersById(this.teamId)
       .subscribe( response => {
+        /*this.rolTypes.forEach( l => {
+          if (l.rolTypeId === response.rolTypeId) {
+            response.rolType = l;
+          }
+        });
+        this.rols.forEach( l => {
+          if (l.rolId === response.rolId) {
+            response.rol = l;
+          }
+        });
+        this.members.push(response);*/
+
         response.forEach( i => {
           this.rolTypes.forEach( l => {
             if (l.rolTypeId === i.rolTypeId) {
@@ -84,6 +99,10 @@ export class MemberSearchComponent implements OnInit {
         this.rols = response;
       });
   }
+
+  /*getTotalPlayerAverage() {
+    this.totalPlayerAverage = this.membersService.getTotalPlayerAverage(this.team.teamId);
+  }*/
 
   /* Go to watch Team of the member */
   goTeam() {

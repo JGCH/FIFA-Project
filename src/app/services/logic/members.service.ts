@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { MemberModel } from '../../shared/models/member.model';
 import {RolTypeModel} from '../../shared/models/rol-type.model';
 import {RolsModel} from '../../shared/models/rols.model';
+import { map, filter } from 'rxjs/operators';
 import {TeamModel} from '../../shared/models/team.model';
 
 @Injectable()
@@ -260,15 +261,19 @@ export class MembersService {
 
   /* Allow Get total average of players for each team*/
   /* Return: Observable: number => Number Total of Teachnitians */
-  getTotalAverage(): Observable<number> {
+  getTotalPlayerAverage(teamId: number): Observable<number> {
     return new Observable( observer => {
-      let members = [];
+      let total = 0;
+      let average = 0;
       this.members.forEach( i => {
-        if (i.rolId <= 4) {
-          members.push(i);
+        if (i.rolId >= 5 && i.teamId === teamId) {
+          total++;
+          if (!i.headline){
+            average++;
+          }
         }
       });
-      observer.next(members.length);
+      observer.next((average / total) * 100);
     });
   }
 
@@ -311,6 +316,39 @@ export class MembersService {
     });
   }
 
+  /* Allow Get all Members of a Soccer team*/
+  /* Params: teamId: number => Id of Team */
+  /* Return: Observable: TeamModel => List Object Members */
+  getMembersByIdPipe(teamId): Observable<MemberModel> {
+    return new Observable( observer => {
+      this.members.forEach( member => {
+        observer.next(member);
+      });
+      observer.complete();
+    })/*.pipe(
+      filter((member) => {
+        return (member.teamId === teamId);
+      }),
+      map( data => {
+        return new MemberModel(
+            data.memberId,
+            data.name,
+            data.lastName,
+            data.nacionality,
+            data.birthdate,
+            data.photoImg,
+            data.headline,
+            data.shirtNumber,
+            data.rolTypeId,
+            data.rolId,
+            data.teamId,
+            data.rol,
+            data.rolType
+        );
+      })
+    );*/
+  }
+
   /* Allow Get Member of a Soccer team*/
   /* Params: teamId: number => Id of Team */
   /* Return: Observable: TeamModel => Object Member */
@@ -339,6 +377,40 @@ export class MembersService {
         }
       });
     });
+  }
+
+  /* Allow Get Member of a Soccer team*/
+  /* Params: teamId: number => Id of Team */
+  /* Return: Observable: TeamModel => Object Member */
+  getMemberByIdPipe(memberId, teamId): Observable<MemberModel> {
+    return new Observable( observer => {
+      this.members.forEach( member => {
+        observer.next(member);
+      });
+      observer.complete();
+      observer.error('Equipo no Existe');
+    })/*.pipe(
+      filter((member) => {
+        return (member.teamId === teamId && member.memberId === memberId);
+      }),
+      map( data => {
+        return new MemberModel(
+            data.memberId,
+            data.name,
+            data.lastName,
+            data.nacionality,
+            data.birthdate,
+            data.photoImg,
+            data.headline,
+            data.shirtNumber,
+            data.rolTypeId,
+            data.rolId,
+            data.teamId,
+            data.rol,
+            data.rolType
+        );
+      })
+    );*/
   }
 
   /* Allow Save a Member */
